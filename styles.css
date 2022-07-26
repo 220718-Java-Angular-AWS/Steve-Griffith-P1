@@ -27,7 +27,7 @@
 }
 
 
-input {
+.signUp>input {
     position: relative;
     border: 1 px solid black;
     outline: none;
@@ -37,8 +37,6 @@ input {
     margin-bottom: 10px;
 
 }
-
-
 
 
 .login {
@@ -54,6 +52,17 @@ input {
 
 }
 
+.login>input {
+    position: relative;
+    border: 1 px solid black;
+    outline: none;
+    width: 200px;
+    height: 40px;
+    left: 25%;
+    margin-bottom: 10px;
+
+}
+
 .login>h3 {
     margin-left: 45%;
     font-size: 16pt;
@@ -63,11 +72,34 @@ input {
     text-align: center;
 }
 
+.Container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    margin-top: 15%;
+    margin-left: 35%;
+
+}
+
+.Container>label {
+    font-size: 14pt;
+}
+
+.Container>select {
+    width: auto;
+    outline: none;
+    text-align: center;
+    font-size: 12pt;
+    margin-left: auto;
+}
+
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 5px;
     border: 1px solid red;
-    width: auto;
-    margin: 10px;
+    width: 1900px;
+    height: auto;
+    margin: 10px, 10px;
 }
