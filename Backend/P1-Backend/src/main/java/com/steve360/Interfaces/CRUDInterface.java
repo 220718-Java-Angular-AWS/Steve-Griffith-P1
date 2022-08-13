@@ -1,4 +1,4 @@
-package Interfaces;
+package com.steve360.Interfaces;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface CRUDInterface <T> {
 
     T read(int id);
 
-    boolean validate(String userName);
+    T validate(String userName, String password);
 
     List<T> readAll();
 

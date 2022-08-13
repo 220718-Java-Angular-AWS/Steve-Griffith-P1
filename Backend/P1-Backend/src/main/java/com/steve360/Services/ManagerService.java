@@ -1,4 +1,4 @@
-package Services;
+package com.steve360.Services;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,6 @@ public class ManagerService {
 
     private ManagerService(){
 
-
     }
 
     public static Connection getConnection(){
@@ -25,6 +24,7 @@ public class ManagerService {
     }
 
     private static void connect(){
+        System.out.println("Connecting ManagerService");
 
         try{
             Properties props = new Properties();
@@ -35,9 +35,10 @@ public class ManagerService {
             String host = props.getProperty("host");
             String port = props.getProperty("port");
             String dbName = props.getProperty("dbName");
-            String driver = props.getProperty("driver");
             String userName = props.getProperty("userName");
             String password = props.getProperty("password");
+            String schema = props.getProperty("schema");
+            String driver = props.getProperty("driver");
 
             StringBuilder builder = new StringBuilder("jdbc:postgresql://");
             builder.append(host);
@@ -49,12 +50,20 @@ public class ManagerService {
             builder.append(userName);
             builder.append("&password=");
             builder.append(password);
+            builder.append("&currentSchema=");
+            builder.append(schema);
 
+
+            Class.forName(driver);
             connection = DriverManager.getConnection(builder.toString());
+
+            System.out.println("Conecctiuibn");
         }
 
-        catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
+        catch (IOException | SQLException | ClassNotFoundException e) {
+
+            System.out.println("Exception");
+           e.printStackTrace();
 
         }
 
