@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
                 resp.getWriter().println(json);
             }
 
-        resp.setContentType("Charset=UTF-8");
+        resp.setContentType("Application/Json; Charset=UTF-8");
         resp.setStatus(200);
 
     }
@@ -56,6 +56,8 @@ public class UserServlet extends HttpServlet {
             builder.append(buffer.readLine());
         }
         String json = builder.toString();
+        System.out.println(json);
+
 
         User newUser = mapper.readValue(json, User.class);
         service.save(newUser);

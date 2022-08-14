@@ -22,27 +22,18 @@ public class User {
         this.roleType = roleType;
     }
 
-    public User( String userName, String password, String email){
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-    }
-
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
+    public  Integer getUserId() {
+        return userId;
+    }
     public void setRoleType(String roleType){
         this.roleType = roleType;
     }
 
     public String getRoleType() {
         return roleType;
-    }
-
-
-    public  Integer getUserId() {
-        return userId;
     }
 
     public void setUserName(String userName){
@@ -71,7 +62,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean validation(Object o){
+    public boolean equals(Object o){
         if (this == o) {
             return true;
         }
@@ -80,14 +71,21 @@ public class User {
             }
             User user = (User) o;
             return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName) &&
-                    Objects.equals(email, user.email) && Objects.equals(password, user.password);
+                    Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(roleType, roleType);
     }
     @Override
     public int hashCode(){
-        return Objects.hash(userId, userName, email, password);
+        return Objects.hash(userId, userName, email, password, roleType);
     }
     @Override
     public String toString(){
-        return "{" + "userId=" + userId + ", username= '" + userName + '/' + ", password='" + password + '/' + '}';
-    }
+
+        return "{" +
+                "userId=" + userId +
+                ", username='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roleType='" + roleType + '\'' +
+                '}';
+    };
 }

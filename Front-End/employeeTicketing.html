@@ -6,47 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
+    <script src="./javascript.js"></script>
     <title>ERS - Ticketing</title>
 </head>
 
 <body>
-
+    <div class="title">
+        <h1>
+            Welcome to the ERS
+        </h1>
+    </div>
     <nav>
         <ul>
-            <li>
-                Reimbursments
-            </li>
+            <li><a href="./reimbursements.html">Reimbursements</a></li>
+            <li>Logout</li>
         </ul>
     </nav>
 
-    <div class="title">
-        <h1>
-            Welcome to the Employee Reimbursment System
-        </h1>
-    </div>
-
-    <div class="Container">
+    <div class="ExpBox">
 
         <label for="expenseType">Choose an Expense Type:</label>
 
         <select name="expenseTypeDrop" id="expenseType">
-            <option value="default" disabled>Choose: </option>
+            <option value="default">Choose:</option>
             <option value="food">Food</option>
             <option value="travel">Travel</option>
             <option value="lodging">Lodging</option>
         </select>
 
-        <label for="expenseCost">Expense Cost:</label>
-        <input type="number" placeholder="Enter Amount">
-
+        <br><label for="expenseCost">Expense Cost:</label>
+        <input type="number" step=".01" min="0" max="10" placeholder="$0.00">
         <input type="button" value="submit">
 
 
     </div>
 </body>
-
-<footer>
-    <h1>Some Stuff Goes Here</h1>
-</footer>
 
 </html>

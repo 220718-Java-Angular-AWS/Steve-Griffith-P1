@@ -15,16 +15,19 @@
         <listener-class>com.steve360.servlets.DependencyLoaderListener</listener-class>
     </listener>
 
-    <servlet-mapping>
-        <servlet-name>healthServlet</servlet-name>
-        <url-pattern>/health</url-pattern>
-    </servlet-mapping>
+    <!-- CORS FILTER -->
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>com.steve360.servlets.CORSFilter</filter-class>
+    </filter>
 
-    <servlet>
-        <servlet-name>healthServlet</servlet-name>
-        <servlet-class>com.steve360.servlets.userServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+
+    </filter-mapping>
+    <!-- /CORS FILTER -->
+
 
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>

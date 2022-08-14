@@ -30,7 +30,7 @@ public class ReimbursementServlet extends HttpServlet {
             String json = mapper.writeValueAsString(reimbursementsList);
             resp.getWriter().println(json);
         }
-        resp.setContentType("Json");
+        resp.setContentType("Application/Json; Charset=UTF-8");
         resp.setStatus(200);
     }
 
