@@ -4,10 +4,7 @@ import com.steve360.Interfaces.CRUDInterface;
 import com.steve360.Objects.Reimbursements;
 import com.steve360.Services.ManagerService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,15 +18,19 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
         @Override
         public void create(Reimbursements reimbursements){
             try{
-                String sql = "Insert Into reimbursements (reimbursementType, reimbursementcost, reimbursemenstatus, userid) Values(?, ?, ?, Pending)";
-                PreparedStatement psmt = connection.prepareStatement(sql);
+                String sql = "Insert Into reimbursements (reimbursementType, reimbursementcost, reimbursementstatus) Values(?, ?, ?)";
+                PreparedStatement psmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 psmt.setString(1, reimbursements.getReimbursementType());
-                psmt.setFloat(3, reimbursements.getReimbursementCost());
-                psmt.setString(2, reimbursements.getReimbursementStatus());
-               psmt.setInt(4, reimbursements.getUserId());
-
+                psmt.setFloat(2, reimbursements.getReimbursementCost());
+                psmt.setString(3, reimbursements.getReimbursementStatus());
 
                 psmt.executeUpdate();
+
+                ResultSet keys = psmt.getGeneratedKeys();
+                if (keys.next()){
+                    Integer key = keys.getInt("userId");
+                    reimbursements.setUserId(key);
+                }
             }
 
             catch (SQLException e) {
@@ -42,11 +43,11 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             Reimbursements reimbursements = new Reimbursements();
 
             try{
-                String sql = "Select * From reimbursements Where reimbursementid = ?";
+                String sql = "Select * From reimbursements Where = ?";
                 PreparedStatement psmt = connection.prepareStatement(sql);
                 psmt.setInt(1, id);
 
-                ResultSet resultSet =psmt.executeQuery();
+                ResultSet resultSet = psmt.executeQuery();
                 if(resultSet.next()){
                     reimbursements.setReimbursementId(resultSet.getInt("reimbursementid"));
                     reimbursements.setReimbursementType(resultSet.getString("reimbursementtype"));
@@ -82,6 +83,7 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
                     Reimbursements reimbursements = new Reimbursements();
 
                     reimbursements.setReimbursementId((results.getInt("reimbursementId")));
+                    reimbursements.setUserId(results.getInt("userid"));
                     reimbursements.setReimbursementType((results.getString("reimbursementType")));
                     reimbursements.setReimbursementStatus((results.getString("reimbursementStatus")));
                     reimbursements.setReimbursementCost((results.getFloat("reimbursementCost")));

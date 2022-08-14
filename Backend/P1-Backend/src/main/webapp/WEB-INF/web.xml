@@ -42,7 +42,7 @@
 
     <servlet-mapping>
         <servlet-name>reimbursementServlet</servlet-name>
-        <url-pattern>/reimbursement</url-pattern>
+        <url-pattern>/reimbursements</url-pattern>
     </servlet-mapping>
 
     <servlet>

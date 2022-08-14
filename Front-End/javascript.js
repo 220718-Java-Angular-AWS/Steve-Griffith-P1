@@ -7,7 +7,7 @@ let user = {
     password: document.getElementById("password").value
 }
 
-let url = 'http://localhost:8080/P1-Backend/users'
+let url = 'http://localhost:8080/P1-Backend/users?user-id='
 
 let response = await fetch(url, {
     method: 'post',
@@ -40,7 +40,7 @@ async function signupAdmin(){
         password: document.getElementById("password").value
     }
     
-    let url = 'http://localhost:8080/P1-Backend/users'
+    let url = 'http://localhost:8080/P1-Backend/users?user-id='
     
     let response = await fetch(url, {
         method: 'post',
@@ -57,8 +57,6 @@ async function signupAdmin(){
         alert("Something happened");
     }
     }
-    
-
 
 async function getuserName(userid){
    let url = 'http://localhost:8080/P1-Backend/users' + userid;
@@ -72,10 +70,30 @@ async function getuserName(userid){
 }
 
 function backToHome(){
-    var clicked = true;
+    let clicked = false;
     document.getElementById('cancelBtn').addEventListener("click", function(){
         if(clicked == true){
             window.location = './Index.html';
         }
     });
 }
+
+async function displayReimbursements(userid){
+    let url = 'http://localhost:8080/P1-Backend/reimbursements?user-id=' + userid;
+    let response = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/Json; charset=UTF-8'
+        }
+    });
+    let array = response.json();
+    let htmlElement = document.getElementById('reimbursements');
+
+    for(let i = 0; i < array.length; i++){
+        let reimbursement = array[i];
+
+        
+        htmlElement.innerHTML += "<h3>UserId: " + reimbursement.userId + "</h3>";
+        htmlElement.innerHTML += "<h3>Employee Name: " + reimbursement.type + "</h3>";
+        htmlElement.innerHTML += "<h3>Status: " +reimbursement.status + "</h3>";
+        htmlElement.innerHTML += "<h3>Cost: " + reimbursement.cost + "</h3>"; 
+    }
+}
+

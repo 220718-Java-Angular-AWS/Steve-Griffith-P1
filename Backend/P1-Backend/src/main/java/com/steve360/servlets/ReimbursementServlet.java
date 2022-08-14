@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/reimbursement")
+@WebServlet("/reimbursements")
 public class ReimbursementServlet extends HttpServlet {
     ReimbursementService service;
     ObjectMapper mapper;
@@ -32,6 +32,8 @@ public class ReimbursementServlet extends HttpServlet {
         }
         resp.setContentType("Application/Json; Charset=UTF-8");
         resp.setStatus(200);
+
+        System.out.println("Reimbursemnts Here");
     }
 
     @Override

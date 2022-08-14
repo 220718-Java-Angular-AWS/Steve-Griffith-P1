@@ -1,5 +1,7 @@
 package com.steve360.Objects;
 
+import java.util.Objects;
+
 public class Reimbursements
  {
 
@@ -65,4 +67,30 @@ public class Reimbursements
     public void setUserId(Integer userId){
         this.userId = userId;
     }
+
+     public boolean equals(Object o){
+         if (this == o) {
+             return true;
+         }
+         if (o == null || getClass() != o.getClass()){
+             return false;
+         }
+         Reimbursements reimbursements = (Reimbursements) o;
+         return Objects.equals(userId, reimbursements.userId) && Objects.equals(reimbursementCost, reimbursements.reimbursementCost) &&
+                 Objects.equals(reimbursementType, reimbursements.reimbursementType) && Objects.equals(reimbursementStatus, reimbursements.reimbursementStatus);
+     }
+     @Override
+     public int hashCode(){
+         return Objects.hash(userId, reimbursementCost, reimbursementStatus, reimbursementType);
+     }
+     @Override
+     public String toString(){
+
+         return "{" +
+                 "userId=" + userId +
+                 ", reimbursementCost='" + reimbursementCost + '\'' +
+                 ", reimbursementType='" + reimbursementType + '\'' +
+                 ", reimbursementStatus'" + reimbursementStatus + '\'' +
+                 '}';
+     };
 }
