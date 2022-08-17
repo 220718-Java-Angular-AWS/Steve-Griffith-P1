@@ -18,11 +18,15 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
         @Override
         public void create(Reimbursements reimbursements){
             try{
-                String sql = "Insert Into reimbursements (reimbursementType, reimbursementcost, reimbursementstatus) Values(?, ?, ?)";
+                String sql = "INSERT INTO reimbursements (reimbursementtype, reimbursementcost, reimbursementstatus) VALUES ((SELECT userid FROM credentials WHERE userid = ?), ? ,? ,?)";
                 PreparedStatement psmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+                //psmt.setInt(1,reimbursements.getReimbursementId());
                 psmt.setString(1, reimbursements.getReimbursementType());
-                psmt.setFloat(2, reimbursements.getReimbursementCost());
+                psmt.setInt(2, reimbursements.getReimbursementCost());
                 psmt.setString(3, reimbursements.getReimbursementStatus());
+
+
 
                 psmt.executeUpdate();
 
@@ -43,15 +47,16 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             Reimbursements reimbursements = new Reimbursements();
 
             try{
-                String sql = "Select * From reimbursements Where = ?";
+                String sql = "Select * From reimbursements Where userid = ?";
                 PreparedStatement psmt = connection.prepareStatement(sql);
                 psmt.setInt(1, id);
 
                 ResultSet resultSet = psmt.executeQuery();
                 if(resultSet.next()){
                     reimbursements.setReimbursementId(resultSet.getInt("reimbursementid"));
+                    reimbursements.setUserId(resultSet.getInt("userid"));
                     reimbursements.setReimbursementType(resultSet.getString("reimbursementtype"));
-                    reimbursements.setReimbursementCost(resultSet.getFloat("reimbursementcost"));
+                    reimbursements.setReimbursementCost(resultSet.getInt("reimbursementcost"));
                     reimbursements.setReimbursementStatus(resultSet.getString("reimbursementstatus"));
                 }
 
@@ -81,13 +86,15 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
 
                 while (results.next()){
                     Reimbursements reimbursements = new Reimbursements();
-
-                    reimbursements.setReimbursementId((results.getInt("reimbursementId")));
+                    reimbursements.setReimbursementId(results.getInt("reimbursementid"));
                     reimbursements.setUserId(results.getInt("userid"));
                     reimbursements.setReimbursementType((results.getString("reimbursementType")));
                     reimbursements.setReimbursementStatus((results.getString("reimbursementStatus")));
-                    reimbursements.setReimbursementCost((results.getFloat("reimbursementCost")));
+                    reimbursements.setReimbursementCost((results.getInt("reimbursementCost")));
+
+
                     reimbursementsList.add(reimbursements);
+
 
                 }
             }
@@ -119,6 +126,12 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             }
 
         }
+
+    @Override
+    public void updateRole(Reimbursements reimbursements) {
+
+    }
+
 
         @Override
         public void delete(int id) {

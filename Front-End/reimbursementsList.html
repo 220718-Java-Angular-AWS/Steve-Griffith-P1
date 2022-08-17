@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
+    <script src="./javascript.js"></script>
+    <title>ERS - Reimbursements</title>
+</head>
+<nav class="navBar">
+    <ul>
+        <li><a href="./employeeTicketing.html">Submit New Claim</a></li>
+        <li><a onclick="logout()">Logout</a></li>
+    </ul>
+</nav>
+<div>
+    <header class="title">
+        <h1>
+            Welcome to the Employee Reimbursement System
+        </h1>
+    </header>
+</div>
+
+
+<body>
+    <form onsubmit="return false">
+        <h3>Search Reimbursements</h3>
+        <label>Search By ID: </label>
+        <input type="number" placeholder="Enter Reimbursement ID" id="RSingle" required>
+        <button type="submit" id="getReimbursementSingle" onclick="getReimburseSingle()">Get Single
+            Reimbursement</button>
+        <button type="button" onclick="getAllReimbursements();">View All</button>
+        <button type="button" onclick="clrList()">Clear List</button>
+    </form>
+    <br>
+    <div id="individual"></div>
+    <div id="List"></div>
+
+
+
+</body>
+
+</html>

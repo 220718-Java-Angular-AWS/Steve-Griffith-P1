@@ -19,19 +19,28 @@ public class ReimbursementService {
     }
 
 
-    public Reimbursements getReimbursement(int id){
-        return dao.read(id);
+    public List<Reimbursements> getReimbursement(Integer userId){
+        List<Reimbursements> reimbursementList = dao.readAll();
+
+        for (Reimbursements reimbursement: reimbursementList) {
+            if(!reimbursement.getUserId().equals(userId)){
+                reimbursementList.remove(reimbursement);
+            }
+
+        }
+        return reimbursementList;
     }
 
     public List<Reimbursements> getAllReimbursements(){
         return dao.readAll();
     }
 
-    public void updateUser(Reimbursements reimbursement){
+    public void updateReimbursements(Reimbursements reimbursement, Integer userId){
         dao.update(reimbursement);
     }
 
     public void deleteReimbursement(int id){
         dao.delete(id);
     }
+
 }

@@ -26,7 +26,7 @@ public class UserService {
         return dao.readAll();
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user, Integer userId){
         dao.update(user);
     }
 
@@ -34,4 +34,7 @@ public class UserService {
         dao.delete(id);
     }
 
+    public User validate(String userName, String password) {
+        return dao.validate(userName, password);
+    }
 }

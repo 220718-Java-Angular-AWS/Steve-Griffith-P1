@@ -15,19 +15,6 @@
         <listener-class>com.steve360.servlets.DependencyLoaderListener</listener-class>
     </listener>
 
-    <!-- CORS FILTER -->
-    <filter>
-        <filter-name>CorsFilter</filter-name>
-        <filter-class>com.steve360.servlets.CORSFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>CorsFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-
-    </filter-mapping>
-    <!-- /CORS FILTER -->
-
 
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
@@ -50,5 +37,28 @@
         <servlet-class>com.steve360.servlets.ReimbursementServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VerificationServlet</servlet-name>
+        <url-pattern>/verification</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VerificationServlet</servlet-name>
+        <servlet-class>com.steve360.servlets.VerificationServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- CORS FILTER -->
+    <filter>
+        <filter-name>CORSFilter</filter-name>
+        <filter-class>com.steve360.servlets.CORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CORSFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- /CORS FILTER -->
 
     </web-app>

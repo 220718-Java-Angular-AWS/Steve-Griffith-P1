@@ -1,8 +1,9 @@
 
 
 # Things Needed for Project
-- code login function
-- Fix Reimbursements Function (error = String does not match the expected pattern)
-- handle role implementation
-- handle validation
-- reimbursements page refuses to be styled
+- Minor Bug-fixes Remain
+
+## Known Issues:
+- user's cant create more than one reimbursement request
+- Employees have access to admin controls
+- Reimbursement creation is spotty (i.e New Accounts can create new ones, but existing accounts cant)

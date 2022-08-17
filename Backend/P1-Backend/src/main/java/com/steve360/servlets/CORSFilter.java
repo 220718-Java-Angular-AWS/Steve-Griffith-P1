@@ -9,9 +9,7 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
 
-public class CORSFilter  implements Filter {
-
-
+public class CORSFilter implements Filter {
     /**
      * Default constructor.
      */
@@ -24,6 +22,7 @@ public class CORSFilter  implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {
         // TODO Auto-generated method stub
+        System.out.println("Cors Init");
     }
 
     /**

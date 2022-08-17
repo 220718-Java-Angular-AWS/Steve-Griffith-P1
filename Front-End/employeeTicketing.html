@@ -14,8 +14,9 @@
 <body>
     <nav class="navBar">
         <ul>
-            <li><a href="./reimbursements.html">Reimbursements</a></li>
-            <li><a href="">Something Goes Here</a></li>
+            <li><a href="./reimbursementsList.html">View Reimbursements</a></li>
+            <li><a onclick="logout()">Logout</a></li>
+
         </ul>
     </nav>
     <div>
@@ -39,8 +40,9 @@
         </select>
 
         <br><label for="expenseCost">Expense Cost:</label>
-        <input type="number" step=".01" min="0" max="10" placeholder="$0.00">
-        <input type="button" value="submit">
+        <input type="number" id="expenseCost" name="expenseCost" step=".01" min="0" max="10" placeholder="$0.00">
+        <input type="text" id="status" value="Pending" hidden readonly>
+        <input type="button" value="submit" onclick="createReimbursement()">
 
 
     </div>

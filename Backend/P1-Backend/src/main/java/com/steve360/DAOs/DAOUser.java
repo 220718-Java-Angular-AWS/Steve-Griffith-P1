@@ -20,11 +20,12 @@ public class DAOUser implements CRUDInterface<User> {
     public void create(User user) {
 
         try{
-            String sql = "Insert Into credentials (userName, password, email) Values(?, ?, ?)";
+            String sql = "Insert Into credentials (userName, password, email, roleType) Values(?, ?, ?, ?)";
             PreparedStatement psmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             psmt.setString(1, user.getUserName());
             psmt.setString(2, user.getPassword());
             psmt.setString(3, user.getEmail());
+            psmt.setString(4,user.getRoleType());
 
             psmt.executeUpdate();
 
@@ -36,7 +37,7 @@ public class DAOUser implements CRUDInterface<User> {
 
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -56,6 +57,7 @@ public class DAOUser implements CRUDInterface<User> {
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setUserId(resultSet.getInt("userid"));
+                user.setRoleType(resultSet.getString("roleType"));
 
             }
 
@@ -69,29 +71,30 @@ public class DAOUser implements CRUDInterface<User> {
 
     @Override
     public User validate(String userName, String password) {
-
+        User user = new User();
         try {
             String sql = "SELECT * FROM credentials WHERE username = ? and password = ?";
             PreparedStatement psmt = connection.prepareStatement(sql);
+
             psmt.setString(1, userName);
             psmt.setString(2, password);
 
             ResultSet resultSet = psmt.executeQuery();
-            psmt.close();
 
-            User user = null;
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 user = new User();
-                user.setUserName(resultSet.getString("userName"));
+                user.setUserId(resultSet.getInt("userid"));
+                user.setUserName(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                user.setRoleType(resultSet.getString("roleType"));
+
             }
-            return user;
-        }
 
-        catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
+        return user;
     }
     @Override
     public List<User> readAll() {
@@ -108,6 +111,7 @@ public class DAOUser implements CRUDInterface<User> {
                 user.setUserName(resultSet.getString("userName"));
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
+                user.setRoleType(resultSet.getString("roleType"));
 
                 userList.add(user);
             }
@@ -124,13 +128,29 @@ public class DAOUser implements CRUDInterface<User> {
     @Override
     public void update(User user) {
         try{
-            String sql = "Update credentials Set userName = ?, email = ?, password = ?" +
-                    " Where userID = ?";
+            String sql = "update credentials update credentials Set roletype = ? where userid = ?";
+
             PreparedStatement psmt = connection.prepareStatement(sql);
             psmt.setString(1, user.getUserName());
             psmt.setString(2, user.getEmail());
             psmt.setString(3, user.getPassword());
             psmt.setInt(4, user.getUserId());
+            psmt.executeUpdate();
+
+        }
+
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void updateRole(User user) {
+        try{
+            String sql = "Update credentials Set roleType = ?" +
+                    " Where userID = ?";
+            PreparedStatement psmt = connection.prepareStatement(sql);
+
+            psmt.setString(4,"roleType");
             psmt.executeUpdate();
 
         }

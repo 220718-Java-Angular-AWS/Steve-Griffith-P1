@@ -5,9 +5,12 @@
     --link-hover: #2581DC;
 }
 
+
 .title {
+
     text-align: center;
-    align-items: center;
+    width: auto;
+    height: auto;
 }
 
 .navBar {
@@ -119,6 +122,11 @@ a:visited {
     margin-top: 15%;
     margin-left: 35%;
 
+}
+
+.ExpBox {
+    height: 150px;
+    width: 350px;
 }
 
 .ExpBox>label {

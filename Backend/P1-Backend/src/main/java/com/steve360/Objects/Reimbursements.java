@@ -10,7 +10,7 @@ public class Reimbursements
     private String reimbursementType;
 
     private String reimbursementStatus;
-    private float reimbursementCost;
+    private Integer reimbursementCost;
 
     public Reimbursements()
     {
@@ -18,7 +18,7 @@ public class Reimbursements
     }
 
     //All-Args constructor
-    public Reimbursements(int reimbursementId, String reimbursementType, String reimbursementStatus, float reimbursementCost, Integer userId){
+    public Reimbursements(int reimbursementId, String reimbursementType, String reimbursementStatus, Integer reimbursementCost, Integer userId){
         this.reimbursementId = reimbursementId;
         this.reimbursementType = reimbursementType;
         this.reimbursementStatus = reimbursementStatus;
@@ -53,11 +53,11 @@ public class Reimbursements
         this.reimbursementStatus = reimbursementStatus;
     }
 
-    public float getReimbursementCost() {
+    public Integer getReimbursementCost() {
         return reimbursementCost;
     }
 
-    public void setReimbursementCost(float reimbursementCost) {
+    public void setReimbursementCost(Integer reimbursementCost) {
         this.reimbursementCost = reimbursementCost;
     }
 

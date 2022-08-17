@@ -56,13 +56,44 @@ public class UserServlet extends HttpServlet {
             builder.append(buffer.readLine());
         }
         String json = builder.toString();
-        System.out.println(json);
 
 
         User newUser = mapper.readValue(json, User.class);
         service.save(newUser);
         resp.setStatus(200);
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String param = req.getParameter("user-id");
+        Integer userId = Integer.parseInt(param);
+
+        StringBuilder builder = new StringBuilder();
+        BufferedReader reader = req.getReader();
+
+        while (reader.ready()){
+            builder.append(reader.readLine());
+        }
+
+        String json = builder.toString();
+        User updateUser = mapper.readValue(json, User.class);
+        service.updateUser(updateUser, userId);
+
+        resp.setStatus(200);
+        resp.getWriter().println("Updated");
+        resp.setContentType("application/json; charset=utf-8");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String param = req.getParameter("user-id");
+        Integer userId = Integer.parseInt(param);
+        service.deleteUser(userId);
+
+        resp.setStatus(200);
+        resp.setContentType("application/json; charset=utf-8");
+        resp.getWriter().println("deleted");
     }
 
     @Override
