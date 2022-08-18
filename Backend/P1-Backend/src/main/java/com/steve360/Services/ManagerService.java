@@ -57,7 +57,7 @@ public class ManagerService {
             Class.forName(driver);
             connection = DriverManager.getConnection(builder.toString());
 
-            System.out.println("Conecctiuibn");
+            System.out.println("Connected");
         }
 
         catch (IOException | SQLException | ClassNotFoundException e) {

@@ -18,11 +18,10 @@ public class ReimbursementService {
         dao.create(reimbursement);
     }
 
-
     public List<Reimbursements> getReimbursement(Integer userId){
         List<Reimbursements> reimbursementList = dao.readAll();
 
-        for (Reimbursements reimbursement: reimbursementList) {
+        for (Reimbursements reimbursement : reimbursementList) {
             if(!reimbursement.getUserId().equals(userId)){
                 reimbursementList.remove(reimbursement);
             }
@@ -35,8 +34,8 @@ public class ReimbursementService {
         return dao.readAll();
     }
 
-    public void updateReimbursements(Reimbursements reimbursement, Integer userId){
-        dao.update(reimbursement);
+    public void updateReimbursements(Reimbursements reimbursement, Integer reimbursementId, Integer userId){
+        dao.updateReimbursements(reimbursement, reimbursementId, userId);
     }
 
     public void deleteReimbursement(int id){

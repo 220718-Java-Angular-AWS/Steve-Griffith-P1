@@ -14,7 +14,9 @@
 <body>
     <nav class="navBar">
         <ul>
-            <li><a href="./reimbursementsList.html">View Reimbursements</a></li>
+            <li><a href="./AdminReimbursementsList.html">View Reimbursements</a></li>
+            <li><a href="./adminDashboard.html">Remove Employee</a></li>
+            <li><a href="./employeeLedger.html">Employee Ledger</a></li>
             <li><a onclick="logout()">Logout</a></li>
 
         </ul>
@@ -41,7 +43,7 @@
 
         <br><label for="expenseCost">Expense Cost:</label>
         <input type="number" id="expenseCost" name="expenseCost" step=".01" min="0" max="10" placeholder="$0.00">
-        <input type="text" id="status" value="Pending" hidden readonly>
+        <input type="text" id="RStatus" value="Pending" readonly>
         <input type="button" value="submit" onclick="createReimbursement()">
 
 

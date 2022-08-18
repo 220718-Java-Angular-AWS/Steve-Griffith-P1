@@ -12,20 +12,21 @@ async function login(){
         let user = await response.json();
         if(localStorage == null){
             document.getElementById("login").addEventListener("click", function(){
-                window.localStorage.setItem('Admin', user.roleType);
+                window.localStorage.setItem('userStatus', user.roleType);
             });
         }
         else{
             localStorage.getItem('userId');
             localStorage.getItem('userName');
             localStorage.setItem('userId', user.userId);
-            localStorage.setItem('Admin', user.roleType);
+            localStorage.setItem('userStatus', user.roleType);
         }
         if(user.roleType == 'Administrator'){
             window.location = './adminDashboard.html';
         }
         else{
-            window.location = './employeeTicketing.html' //Come Back to this!
+            user.roleType = 'Employee';
+            window.location = './employeeTicketing.html';
         }
 
     }
@@ -78,7 +79,7 @@ async function signupAdmin(){
         userName: document.getElementById("userName").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
-        roleType: document.getElementById("roleEmp").value
+        roleType: document.getElementById("roleAdmin").value
     }
     
     let url = 'http://localhost:8080/P1-Backend/users';
@@ -122,34 +123,91 @@ function backToHome(){
 async function createReimbursement(){
    
     let reimbursement = {
-        userId: document.getElementById(function(){
-            window.localStorage.setItem(reimbursement.userId)
-        }),
-        reimbursementType: document.getElementById("expenseType").value,
-        reimbursementCost: document.getElementById("expenseCost").value,
-        reimbursementStatus: document.getElementById("status").value
-        
-
+        reimbursementType: document.getElementById('expenseType').value,
+        reimbursementCost: document.getElementById('expenseCost').value,
+        reimbursementStatus: document.getElementById('RStatus').value,
+        userId: window.localStorage.getItem('userId')
     }
-    
-    let url = 'http://localhost:8080/P1-Backend/reimbursements?user-id=';
+
+    let userId = window.localStorage.setItem('userId');
+
+
+    let url = 'http://localhost:8080/P1-Backend/reimbursements?user-id=' + userId;
     
     let response = await fetch(url, {
         method: 'POST',
         headers: {
-            'contentType' : 'Application/json; charset= UTF-8'
+            'content-Type' : 'Application/json; charset=UTF-8'
         },
         body: JSON.stringify(reimbursement)
     });
+
     
-    if(response.status == 200){
-        window.location.reload();
-      
-    }
-    else{
-        alert("Something happened");
-    }
-    }
+}
+   
+    async function editReimbursement(){
+        
+   
+        let reimbursement = {
+            reimbursementType: document.getElementById('expenseType').value,
+            reimbursementCost: document.getElementById('expenseCost').value,
+            userId: window.localStorage.getItem('userId'),
+            reimbursementId: document.getElementById('reimbursementId').value
+        }
+        
+        let userId = window.localStorage.getItem('userId');
+        let url = 'http://localhost:8080/P1-Backend/reimbursements?reimbursement-id=' + reimbursement.reimbursementId + '&user-id=' + userId;
+        
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'contentType' : 'Application/json; charset= UTF-8'
+            },
+            body: JSON.stringify(reimbursement)
+        });
+        
+
+        if(response.status == 200){
+    
+            window.location.reload();
+          
+        }
+        else{
+            alert("Something happened");
+        }
+        }
+        async function editReimbursementAdmin(){
+        
+   
+            let reimbursement = {
+                reimbursementType: document.getElementById('expenseType').value,
+                reimbursementCost: document.getElementById('expenseCost').value,
+                reimbursementStatus: document.getElementById('RStatus'),
+                userId: window.localStorage.getItem('userId'),
+                reimbursementId: document.getElementById('reimbursementId').value
+            }
+            
+            let userId = window.localStorage.getItem('userId');
+            let url = 'http://localhost:8080/P1-Backend/reimbursements?reimbursement-id=' + reimbursement.reimbursementId + '&user-id=' + userId;
+            
+            let response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'contentType' : 'Application/json; charset= UTF-8'
+                },
+                body: JSON.stringify(reimbursement)
+            });
+            
+    
+            if(response.status == 200){
+        
+                window.location.reload();
+              
+            }
+            else{
+                alert("Something happened");
+            }
+            }
 
     async function delEmp(){
         let userId = document.getElementById("userId").value;
@@ -230,34 +288,11 @@ async function createReimbursement(){
     }
 
 
-    async function getReimburseSingle(){
-        let userId = document.getElementById(function(){
-            window.localStorage.getItem("userId", userId)
-        });
-        let url = 'http://localhost:8080/P1-Backend/reimbursements?user-id=' + userId;
-
-        let response = await fetch(url, {
-            method: 'GET',
-            headers:{
-                'Content-Type': 'application/json; charset=utf-8'
-            }
-        });
-
-        let reimbursement = await response.json()
-        let htmlElement = document.getElementById("individual");
-        
-        if(user.userName != null){
-            htmlElement.innerHTML += "<p>ReimbursementId: " + reimbursement.reimbursementId + "</p>";
-            htmlElement.innerHTML += "<p>Username: " + reimbursement.reimbursementType + "</p>";
-            htmlElement.innerHTML += "<p>Email: " + reimbursement.reimbursementCost + "</p>";   
-            htmlElement.innerHTML += "<p>Password: " + reimbursement.reimbursementStatus + "</p>";
-        }
-        
-        
-    }
     async function getAllReimbursements() {
-        
+
+        let userId = window.localStorage.getItem('userId');
         let url = 'http://localhost:8080/P1-Backend/reimbursements';
+
         let response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -270,14 +305,45 @@ async function createReimbursement(){
 
             for(let i = 0; i < array.length; i++){
                 let reimbursementList = array[i];
-                htmlElement.innerHTML += "<p>Reimbursement Id Number: " + reimbursementList.reimbursementId + "</p>";
-                htmlElement.innerHTML += "<p>User Id: " + reimbursementList.userId + "</p>";
-                htmlElement.innerHTML += "<p>Reimbursement Type: " + reimbursementList.reimbursementType + "</p>";
+                htmlElement.innerHTML += "<p>Reimbursement Id Number: " + reimbursementList.reimbursementId;
+                htmlElement.innerHTML += "<p hidden>User Id: " + reimbursementList.userId + "</p>";
+                htmlElement.innerHTML += "<p>Reimbursement Type: " + reimbursementList.reimbursementType + "</p>"
                 htmlElement.innerHTML += "<p>Reimburesement Cost: " + reimbursementList.reimbursementCost + "</p>";
-                htmlElement.innerHTML += "<p> Reimbursement Status: " + reimbursementList.status + "</p><br>";
+                htmlElement.innerHTML += "<p> Reimbursement Status: " + reimbursementList.status + "</p>"
             }
     };
 
+    async function editReimbursementsEmp(){
+
+        let htmlElement = document.getElementById('ListEdit');
+        
+        htmlElement.innerHTML += "<p>Enter the Reimbursement Id you would like to edit</p>"
+        htmlElement.innerHTML += "<input id='reimbursementId' type= 'number'> "
+        htmlElement.innerHTML += "<label for='expenseType'>Choose an Expense Type:</label>"
+        htmlElement.innerHTML+= "<select name='expenseTypeDrop' id='expenseType'><option value='default'>Choose:</option><option value='food'>Food</option> <option value='travel'>Travel</option><option value='lodging'>Lodging</option></select>"
+            htmlElement.innerHTML+= "<br><label for='expenseCost'>Expense Cost:</label>"
+            htmlElement.innerHTML+= "<input type='number' id='expenseCost' name='expenseCost' step='.01' min='0' max='10' placeholder='$0.00'>"
+
+            htmlElement.innerHTML += "<button type= 'submit' onclick= 'editReimbursement()'>Submit Changes</button>"
+        }
+
+
+        async function editReimbursementsAdmin(){
+
+            let htmlElement = document.getElementById('ListEdit');
+            
+            htmlElement.innerHTML += "<p>Enter the Reimbursement Id you would like to edit</p>"
+            htmlElement.innerHTML += "<input id='reimbursementId' type= 'number'> "
+            htmlElement.innerHTML += "<label for='expenseType'>Choose an Expense Type:</label>"
+            htmlElement.innerHTML+= "<select name='expenseTypeDrop' id='expenseType'><option value='default'>Choose:</option><option value='food'>Food</option> <option value='travel'>Travel</option><option value='lodging'>Lodging</option></select>"
+
+            htmlElement.innerHTML +="<select name='expenseStatusDrop' id='expenseStatusDrop'><option value='default'>Choose:</option><option value='Accepted' id= 'RStatus'>Accepted</option><option value='Rejected' id= 'RStatus'>Rejected</option><option value='Completed' id= 'RStatus'>Completed</option></select>"
+
+                htmlElement.innerHTML+= "<br><label for='expenseCost'>Expense Cost:</label>"
+                htmlElement.innerHTML+= "<input type='number' id='expenseCost' name='expenseCost' step='.01' min='0' max='10' placeholder='$0.00'>"
+    
+                htmlElement.innerHTML += "<button type= 'submit' onclick= 'editReimbursement()'>Submit Changes</button>"
+            }
 
     async function logout(){
         window.localStorage.clear();

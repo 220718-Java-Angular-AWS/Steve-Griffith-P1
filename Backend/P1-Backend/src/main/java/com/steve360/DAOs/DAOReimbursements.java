@@ -2,6 +2,7 @@ package com.steve360.DAOs;
 
 import com.steve360.Interfaces.CRUDInterface;
 import com.steve360.Objects.Reimbursements;
+import com.steve360.Objects.User;
 import com.steve360.Services.ManagerService;
 
 import java.sql.*;
@@ -18,23 +19,26 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
         @Override
         public void create(Reimbursements reimbursements){
             try{
-                String sql = "INSERT INTO reimbursements (reimbursementtype, reimbursementcost, reimbursementstatus) VALUES ((SELECT userid FROM credentials WHERE userid = ?), ? ,? ,?)";
-                PreparedStatement psmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                String sql = "INSERT INTO reimbursements (userId,reimbursementtype, reimbursementcost, reimbursementstatus) VALUES ((SELECT userid FROM credentials WHERE userid = ?), ? ,?, ?)";
+                PreparedStatement psmt = connection.prepareStatement(sql);
 
-                //psmt.setInt(1,reimbursements.getReimbursementId());
-                psmt.setString(1, reimbursements.getReimbursementType());
-                psmt.setInt(2, reimbursements.getReimbursementCost());
-                psmt.setString(3, reimbursements.getReimbursementStatus());
+                psmt.setInt(1,reimbursements.getUserId());
+                psmt.setString(2, reimbursements.getReimbursementType());
+                psmt.setFloat(3, reimbursements.getReimbursementCost());
+                psmt.setString(4, reimbursements.getReimbursementStatus());
 
 
 
                 psmt.executeUpdate();
 
+                /*
                 ResultSet keys = psmt.getGeneratedKeys();
                 if (keys.next()){
-                    Integer key = keys.getInt("userId");
-                    reimbursements.setUserId(key);
+                    Integer key = keys.getInt("reimbursementId");
+                    reimbursements.setReimbursementId(key);
                 }
+                */
+
             }
 
             catch (SQLException e) {
@@ -56,7 +60,7 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
                     reimbursements.setReimbursementId(resultSet.getInt("reimbursementid"));
                     reimbursements.setUserId(resultSet.getInt("userid"));
                     reimbursements.setReimbursementType(resultSet.getString("reimbursementtype"));
-                    reimbursements.setReimbursementCost(resultSet.getInt("reimbursementcost"));
+                    reimbursements.setReimbursementCost(resultSet.getFloat("reimbursementcost"));
                     reimbursements.setReimbursementStatus(resultSet.getString("reimbursementstatus"));
                 }
 
@@ -67,6 +71,8 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             }
             return reimbursements;
         }
+
+
 
     @Override
     public Reimbursements validate(String userName, String password) {
@@ -90,8 +96,7 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
                     reimbursements.setUserId(results.getInt("userid"));
                     reimbursements.setReimbursementType((results.getString("reimbursementType")));
                     reimbursements.setReimbursementStatus((results.getString("reimbursementStatus")));
-                    reimbursements.setReimbursementCost((results.getInt("reimbursementCost")));
-
+                    reimbursements.setReimbursementCost((results.getFloat("reimbursementCost")));
 
                     reimbursementsList.add(reimbursements);
 
@@ -105,27 +110,34 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             return reimbursementsList;
         }
 
+    @Override
+    public void update(Reimbursements reimbursements) {
+        System.out.println("Update has Gone Wonky");
+    }
 
-        @Override
-        public void update(Reimbursements reimbursements) {
+    @Override
+    public void update(User user) {
 
-            try{
+    }
 
-                String sql = "Update reimbursements Set reimbursementId = ?, reimbursementType = ?, reimbursementStatus = ?, reimbursementCost = ?, userId = ?";
-                PreparedStatement psmt = connection.prepareStatement(sql);
-                psmt.setInt(1, reimbursements.getReimbursementId());
-                psmt.setString(2, reimbursements.getReimbursementType());
-                psmt.setString(3, reimbursements.getReimbursementStatus());
-                psmt.setFloat(4, reimbursements.getReimbursementCost());
-                psmt.setInt(5,reimbursements.getUserId());
-                psmt.executeUpdate();
-            }
+    @Override
+    public void updateReimbursements(Reimbursements reimbursements, Integer reimbursementId, Integer userId) {
+        try{
+            String sql = "UPDATE reimbursements set reimbursementtype = ?, reimbursementcost = ?, reimbursementstatus = ? WHERE reimbursementid = ? AND userid = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, reimbursements.getReimbursementType());
+            pstmt.setFloat(2, reimbursements.getReimbursementCost());
+            pstmt.setString(3, reimbursements.getReimbursementStatus());
+            pstmt.setInt(4, reimbursementId);
+            pstmt.setInt(5, userId);
 
-            catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
+            pstmt.executeUpdate();
+            System.out.println("Did the Quesry?");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+    }
 
     @Override
     public void updateRole(Reimbursements reimbursements) {
@@ -133,7 +145,7 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
     }
 
 
-        @Override
+    @Override
         public void delete(int id) {
             try{
                 String sql = "Delete From Reimbursements where userId = ?";

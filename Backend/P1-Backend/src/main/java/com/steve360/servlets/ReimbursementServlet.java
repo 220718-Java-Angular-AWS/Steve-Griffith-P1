@@ -2,7 +2,6 @@ package com.steve360.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.steve360.Objects.Reimbursements;
-import com.steve360.Objects.User;
 import com.steve360.Services.ReimbursementService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +29,6 @@ public class ReimbursementServlet extends HttpServlet {
 
         if(param == null) {
             List<Reimbursements> reimbursementList = service.getAllReimbursements();
-
             String json = mapper.writeValueAsString(reimbursementList);
             resp.setStatus(200);
             resp.getWriter().println(json);
@@ -67,24 +65,25 @@ public class ReimbursementServlet extends HttpServlet {
         resp.setStatus(200);
     }
 
-    @Override
+
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String param = req.getParameter("user-id");
-        Integer userId = Integer.parseInt(param);
+        Integer reimbursementId = Integer.parseInt(req.getParameter("reimbursement-id"));
+        Integer userId = Integer.parseInt(req.getParameter("user-id"));
 
         StringBuilder builder = new StringBuilder();
         BufferedReader reader = req.getReader();
-
         while (reader.ready()){
             builder.append(reader.readLine());
-        }
 
+        }
         String json = builder.toString();
-        Reimbursements updateReimbursement = mapper.readValue(json, Reimbursements.class);
-        service.updateReimbursements(updateReimbursement, userId);
+        Reimbursements updateReimbursements = mapper.readValue(json, Reimbursements.class);
+        service.updateReimbursements(updateReimbursements, reimbursementId, userId);
 
         resp.setStatus(200);
         resp.setContentType("application/json; charset=utf-8");
+        System.out.println("Here");
+
     }
 
     @Override

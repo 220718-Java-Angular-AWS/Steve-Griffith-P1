@@ -10,16 +10,14 @@ public class Reimbursements
     private String reimbursementType;
 
     private String reimbursementStatus;
-    private Integer reimbursementCost;
+    private Float reimbursementCost;
 
-    public Reimbursements()
-    {
-        //Default No-Args
-    }
+     public Reimbursements() {
+     }
 
-    //All-Args constructor
-    public Reimbursements(int reimbursementId, String reimbursementType, String reimbursementStatus, Integer reimbursementCost, Integer userId){
-        this.reimbursementId = reimbursementId;
+     //All-Args constructor
+    public Reimbursements(Integer reimbursementId, String reimbursementType, String reimbursementStatus, Float reimbursementCost, Integer userId){
+         this.reimbursementId = reimbursementId;
         this.reimbursementType = reimbursementType;
         this.reimbursementStatus = reimbursementStatus;
         this.reimbursementCost = reimbursementCost;
@@ -53,11 +51,11 @@ public class Reimbursements
         this.reimbursementStatus = reimbursementStatus;
     }
 
-    public Integer getReimbursementCost() {
+    public Float getReimbursementCost() {
         return reimbursementCost;
     }
 
-    public void setReimbursementCost(Integer reimbursementCost) {
+    public void setReimbursementCost(Float reimbursementCost) {
         this.reimbursementCost = reimbursementCost;
     }
 

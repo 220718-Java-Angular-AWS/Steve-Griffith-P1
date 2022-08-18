@@ -1,6 +1,7 @@
 package com.steve360.DAOs;
 
 import com.steve360.Interfaces.CRUDInterface;
+import com.steve360.Objects.Reimbursements;
 import com.steve360.Objects.User;
 import com.steve360.Services.ManagerService;
 
@@ -143,6 +144,12 @@ public class DAOUser implements CRUDInterface<User> {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void updateReimbursements(Reimbursements reimbursements, Integer reimbursementId, Integer userId) {
+
+    }
+
     @Override
     public void updateRole(User user) {
         try{
