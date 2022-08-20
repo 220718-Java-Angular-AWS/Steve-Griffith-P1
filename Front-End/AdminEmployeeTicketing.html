@@ -14,7 +14,7 @@
 <body>
     <nav class="navBar">
         <ul>
-            <li><a href="./AdminReimbursementsList.html">View Reimbursements</a></li>
+            <li><a href="./AdminReimbursementList.html">View Reimbursements</a></li>
             <li><a href="./adminDashboard.html">Remove Employee</a></li>
             <li><a href="./employeeLedger.html">Employee Ledger</a></li>
             <li><a onclick="logout()">Logout</a></li>
@@ -34,7 +34,7 @@
 
         <label for="expenseType">Choose an Expense Type:</label>
 
-        <select name="expenseTypeDrop" id="expenseType">
+        <select name="expenseTypeDrop" id="reimbursementType">
             <option value="default">Choose:</option>
             <option value="food">Food</option>
             <option value="travel">Travel</option>
@@ -42,8 +42,9 @@
         </select>
 
         <br><label for="expenseCost">Expense Cost:</label>
-        <input type="number" id="expenseCost" name="expenseCost" step=".01" min="0" max="10" placeholder="$0.00">
-        <input type="text" id="RStatus" value="Pending" readonly>
+
+        <input type="number" id="reimbursementCost" name="expenseCost" step=".01" min="0" max="10" placeholder="$0.00">
+        <input type="text" id="reimbursementStatus" value="Pending" readonly>
         <input type="button" value="submit" onclick="createReimbursement()">
 
 

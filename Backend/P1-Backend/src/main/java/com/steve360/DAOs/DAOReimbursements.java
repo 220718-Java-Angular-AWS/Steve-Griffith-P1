@@ -132,7 +132,7 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
             pstmt.setInt(5, userId);
 
             pstmt.executeUpdate();
-            System.out.println("Did the Quesry?");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -157,4 +157,20 @@ public class DAOReimbursements implements CRUDInterface<Reimbursements> {
                 e.printStackTrace();
             }
         }
+
+    public void updateStatus(Reimbursements reimbursements, Integer reimbursementId, String reimbursementStatus) {
+            try {
+                String sql = "Update reimbursements Set reimbursementType = ?, reimbursementCost = ?, reimbursementStatus = ? Where reimbursementId = ?";
+                PreparedStatement psmt = connection.prepareStatement(sql);
+                psmt.setString(1, reimbursements.getReimbursementType());
+                psmt.setFloat(2, reimbursements.getReimbursementCost());
+                psmt.setString(3, reimbursementStatus);
+                psmt.setInt(4, reimbursementId);
+
+                psmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
     }
+}

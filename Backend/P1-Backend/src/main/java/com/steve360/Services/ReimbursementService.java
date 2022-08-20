@@ -21,12 +21,10 @@ public class ReimbursementService {
     public List<Reimbursements> getReimbursement(Integer userId){
         List<Reimbursements> reimbursementList = dao.readAll();
 
-        for (Reimbursements reimbursement : reimbursementList) {
-            if(!reimbursement.getUserId().equals(userId)){
-                reimbursementList.remove(reimbursement);
-            }
 
-        }
+//Intellisense changed this thing for me, and it fixed my concurrent comodification exception, but I'll have to look into what it's actually doing.
+        //intellisense mentioned something about Collection.Removelf.
+        reimbursementList.removeIf(reimbursement -> !reimbursement.getUserId().equals(userId));
         return reimbursementList;
     }
 
@@ -34,8 +32,14 @@ public class ReimbursementService {
         return dao.readAll();
     }
 
+
+
     public void updateReimbursements(Reimbursements reimbursement, Integer reimbursementId, Integer userId){
         dao.updateReimbursements(reimbursement, reimbursementId, userId);
+    }
+
+    public void updateByStatus(Reimbursements reimbursements, Integer reimbursementId, String reimbursementStatus){
+        dao.updateStatus(reimbursements, reimbursementId, reimbursementStatus);
     }
 
     public void deleteReimbursement(int id){

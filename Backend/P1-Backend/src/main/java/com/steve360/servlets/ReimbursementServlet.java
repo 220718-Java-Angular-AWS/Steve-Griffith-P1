@@ -63,8 +63,8 @@ public class ReimbursementServlet extends HttpServlet {
 
         service.save(newReimbursement);
         resp.setStatus(200);
+        System.out.println("Posted");
     }
-
 
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer reimbursementId = Integer.parseInt(req.getParameter("reimbursement-id"));
@@ -83,6 +83,8 @@ public class ReimbursementServlet extends HttpServlet {
         resp.setStatus(200);
         resp.setContentType("application/json; charset=utf-8");
         System.out.println("Here");
+        
+        service.updateReimbursements(updateReimbursements, reimbursementId, userId);
 
     }
 
