@@ -30,13 +30,16 @@
         <h3>View Your Current List of Reimbursements</h3>
 
         <button type="button" onclick="getAllReimbursements()">View All</button>
-        <button type="button" onclick="clrList()">Clear List</button>
-
+        <button type="button" onclick="filterAllReimbursements()">Filter Results</button>
+        </button><button type="button" onclick="clrList()">Clear
+            List</button>
         <button type="button" onclick="showReimbursementsEmp()">Edit</button>
     </form>
     <br>
-    <div id="ListEdit"></div>
-    <div id="List"></div>
+    <input type="text" id="search" onkeyup="myFunction()" placeholder="Filter">
+    <br>
+    <ul id="ListEdit"></ul>
+    <ul id="List"></ul>
 
 
 

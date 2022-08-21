@@ -83,7 +83,7 @@ public class ReimbursementServlet extends HttpServlet {
         resp.setStatus(200);
         resp.setContentType("application/json; charset=utf-8");
         System.out.println("Here");
-        
+
         service.updateReimbursements(updateReimbursements, reimbursementId, userId);
 
     }
@@ -96,6 +96,7 @@ public class ReimbursementServlet extends HttpServlet {
 
         resp.setStatus(200);
         resp.getWriter().println("deleted");
+        System.out.println("Deleted");
     }
 
     @Override

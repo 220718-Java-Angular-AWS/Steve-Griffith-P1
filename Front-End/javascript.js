@@ -290,6 +290,62 @@ let user = window.localStorage.getItem('userId', reimbursement.userId);
     }
 
 
+
+
+    async function filterAllReimbursements() {
+
+        let userId = window.localStorage.getItem('userId');
+        let url = 'http://localhost:8080/P1-Backend/reimbursements?user-id=' + userId;
+
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+ 
+            let array = await response.json();
+            let htmlElement = document.getElementById('List');
+
+            for(let i = 0; i < array.length; i++){
+                let reimbursementList = array[i];
+                
+                htmlElement.innerHTML += "<li><a id= 'reimbursementId'> Reimbursement Id Number: "  + reimbursementList.reimbursementId + "<br>" +
+                 "user Id: " + reimbursementList.userId + "<br>" +
+                 "Reimbursement Type: " + reimbursementList.reimbursementType + "<br>" +
+                 "Reimburesement Cost: " + reimbursementList.reimbursementCost + "<br>" +
+                 "Reimbursement Status: " + reimbursementList.reimbursementStatus + "</a></li><br>";
+            }
+            
+    };
+
+    async function filterAllReimbursementsAdmin() {
+
+        let userId = window.localStorage.getItem('userId');
+        let url = 'http://localhost:8080/P1-Backend/reimbursements';
+
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+ 
+            let array = await response.json();
+            let htmlElement = document.getElementById('List');
+
+            for(let i = 0; i < array.length; i++){
+                let reimbursementList = array[i];
+                
+                htmlElement.innerHTML += "<li><a id= 'reimbursementId'> Reimbursement Id Number: "  + reimbursementList.reimbursementId + "<br>" +
+                 "user Id: " + reimbursementList.userId + "<br>" +
+                 "Reimbursement Type: " + reimbursementList.reimbursementType + "<br>" +
+                 "Reimburesement Cost: " + reimbursementList.reimbursementCost + "<br>" +
+                 "Reimbursement Status: " + reimbursementList.reimbursementStatus + "</a></li><br>";
+            }
+            
+    };
+
     async function getAllReimbursements() {
 
         let userId = window.localStorage.getItem('userId');
@@ -308,11 +364,11 @@ let user = window.localStorage.getItem('userId', reimbursement.userId);
             for(let i = 0; i < array.length; i++){
                 let reimbursementList = array[i];
                 htmlElement.innerHTML += "<div id= 'RList'>"
-                htmlElement.innerHTML += "<p id= 'reimbursementId'>Reimbursement Id Number: " + reimbursementList.reimbursementId;
-                htmlElement.innerHTML += "<p id= 'userId'>user Id: " + reimbursementList.userId + "</p>";
-                htmlElement.innerHTML += "<p id= 'reimbursementType'>Reimbursement Type: " + reimbursementList.reimbursementType + "</p>"
-                htmlElement.innerHTML += "<p id= 'reimbursementCost'>Reimburesement Cost: " + reimbursementList.reimbursementCost + "</p>";
-                htmlElement.innerHTML += "<p id= 'reimbursementStatus'> Reimbursement Status: " + reimbursementList.reimbursementStatus + "</p>"
+                htmlElement.innerHTML += "<p id= 'reimbursementId'> Reimbursement Id Number: " + reimbursementList.reimbursementId + "</p>";
+                htmlElement.innerHTML += "<p id= 'userId'> user Id: " + reimbursementList.userId + "</p></li>";
+                htmlElement.innerHTML += "<p id= 'reimbursementType'> Reimbursement Type: " + reimbursementList.reimbursementType + "</p>";
+                htmlElement.innerHTML += "<p id= 'reimbursementCost'> Reimburesement Cost: " + reimbursementList.reimbursementCost + "</p>";
+                htmlElement.innerHTML += "<p id= 'reimbursementStatus'> Reimbursement Status: " + reimbursementList.reimbursementStatus + "</p>";
                 htmlElement.innerHTML += "</div>"
             }
             
@@ -336,11 +392,11 @@ let user = window.localStorage.getItem('userId', reimbursement.userId);
             for(let i = 0; i < array.length; i++){
                 let reimbursementList = array[i];
                 htmlElement.innerHTML += "<div id= 'RList'>"
-                htmlElement.innerHTML += "<p id= 'reimbursementId'>Reimbursement Id Number: " + reimbursementList.reimbursementId;
-                htmlElement.innerHTML += "<p id= 'userId'>user Id: " + reimbursementList.userId + "</p>";
-                htmlElement.innerHTML += "<p id= 'reimbursementType'>Reimbursement Type: " + reimbursementList.reimbursementType + "</p>"
-                htmlElement.innerHTML += "<p id= 'reimbursementCost'>Reimburesement Cost: " + reimbursementList.reimbursementCost + "</p>";
-                htmlElement.innerHTML += "<p id= 'reimbursementStatus'> Reimbursement Status: " + reimbursementList.reimbursementStatus + "</p>"
+                htmlElement.innerHTML += "<p id= 'reimbursementId'> Reimbursement Id Number: " + reimbursementList.reimbursementId + "</p>";
+                htmlElement.innerHTML += "<p id= 'userId'> user Id: " + reimbursementList.userId + "</p></li>";
+                htmlElement.innerHTML += "<p id= 'reimbursementType'> Reimbursement Type: " + reimbursementList.reimbursementType + "</p>";
+                htmlElement.innerHTML += "<p id= 'reimbursementCost'> Reimburesement Cost: " + reimbursementList.reimbursementCost + "</p>";
+                htmlElement.innerHTML += "<p id= 'reimbursementStatus'> Reimbursement Status: " + reimbursementList.reimbursementStatus + "</p>";
                 htmlElement.innerHTML += "</div>"
             }
             
@@ -377,6 +433,32 @@ let user = window.localStorage.getItem('userId', reimbursement.userId);
                 htmlElement.innerHTML += "<button type= 'submit' onclick= 'editReimbursementsAdmin()'>Submit Changes</button>"
                 
             }
+        
+            function myFunction(){
+
+
+                var input, filter, ul, i, li, a, txtValue;
+                input = document.getElementById('search');
+                
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("List");
+                li = ul.getElementsByTagName('li');
+
+                for(i = 0; 0 < li.length; i++){
+
+                    a = li[i].getElementsByTagName("a")[0];
+
+                    txtValue = a.textContent || a.innerText;
+
+                    if(txtValue.toUpperCase().indexOf(filter) > -1){
+                        li[i].style.display = "";
+                    }
+                    else{
+                        li[i].style.display = "none"
+                    }
+                }
+            }
+            
 
     async function logout(){
         window.localStorage.clear();
